@@ -8,25 +8,37 @@ The primary goal of this file is to demonstrate a simple unittest implementation
 """
 
 import unittest
-
 from Triangle import classifyTriangle
 
-# This code implements the unit test functionality
-# https://docs.python.org/3/library/unittest.html has a nice description of the framework
-
 class TestTriangles(unittest.TestCase):
-    # define multiple sets of tests as functions with names that begin
 
-    def testRightTriangleA(self): 
-        self.assertEqual(classifyTriangle(3,4,5),'Right','3,4,5 is a Right triangle')
+    def testEquilateralTriangles(self):
+        self.assertEqual(classifyTriangle(3,3,3), 'Equilateral')
+        self.assertEqual(classifyTriangle(200,200,200), 'Equilateral')
 
-    def testRightTriangleB(self): 
-        self.assertEqual(classifyTriangle(5,3,4),'Right','5,3,4 is a Right triangle')
-        
-    def testEquilateralTriangles(self): 
-        self.assertEqual(classifyTriangle(1,1,1),'Equilateral','1,1,1 should be equilateral')
+    def testIsocelesTriangles(self):
+        self.assertEqual(classifyTriangle(5,5,8), 'Isoceles')
+        self.assertEqual(classifyTriangle(8,5,5), 'Isoceles')
+        self.assertEqual(classifyTriangle(5,8,5), 'Isoceles')
+
+    def testScaleneTriangles(self):
+        self.assertEqual(classifyTriangle(4,5,6), 'Scalene')
+
+    def testRightTriangles(self):
+        self.assertEqual(classifyTriangle(3,4,5), 'Right')
+        self.assertEqual(classifyTriangle(5,3,4), 'Right')
+        self.assertEqual(classifyTriangle(5,12,13), 'Right')
+
+    def testNotATriangle(self):
+        self.assertEqual(classifyTriangle(1,1,3), 'NotATriangle')
+        self.assertEqual(classifyTriangle(1,10,12), 'NotATriangle')
+
+    def testInvalidInputs(self):
+        self.assertEqual(classifyTriangle(0,4,5), 'InvalidInput')
+        self.assertEqual(classifyTriangle(-1,4,5), 'InvalidInput')
+        self.assertEqual(classifyTriangle(201,100,100), 'InvalidInput')
+        self.assertEqual(classifyTriangle('a',3,5), 'InvalidInput')
+        self.assertEqual(classifyTriangle(3,3.5,3), 'InvalidInput')
 
 if __name__ == '__main__':
-    print('Running unit tests')
     unittest.main()
-
